@@ -31,6 +31,7 @@ var (
 )
 
 func main() {
+	flag.Usage = printHelp
 	flag.BoolVar(&ignoreCGO, "ignore-cgo", false, "")
 	flag.BoolVar(&ignoreEditors, "ignore-editors", false, "")
 	flag.Parse()
@@ -90,6 +91,21 @@ func runCheck(optional bool, c checker) int {
 		printWithTabs(c.Resolution())
 	}
 	return exit
+}
+
+func printHelp() {
+	fmt.Print(`govalidate:
+Validates your Go installation and dependencies.
+
+Usage:
+  govalidate [option]
+
+Options:
+  -ignore-cgo       Ignore checking CGO support. 
+  -ignore-editors   Ignore checking editor plugin support.
+  -help             Display this user guide.
+`)
+	os.Exit(1)
 }
 
 func printWithTabs(msg string) {
